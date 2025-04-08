@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>სურათების გალერეა - UltraHD</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;600&family=Shadows+Into+Light&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="gallery-style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="https://api.iconify.design/fluent-emoji-flat:framed-picture.svg" alt="გალერეა">
+                <h1>UltraHD სურათების გალერეა</h1>
+            </div>
+            <p>ატვირთეთ სურათები და შექმენით მაღალი ხარისხის ლამაზი გალერეა</p>
+            
+            <nav class="main-nav">
+                <a href="product-template-generator-fixed.html" class="nav-btn"><i class="fas fa-arrow-left"></i> დაბრუნება გენერატორზე</a>
+            </nav>
+        </div>
+
+        <div class="gallery-app">
+            <div class="upload-section">
+                <h2><i class="fas fa-cloud-upload-alt"></i> სურათების ატვირთვა</h2>
+                
+                <!-- Upload area with drag & drop -->
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="imageUpload" multiple accept="image/*" class="file-input">
+                    <div class="upload-instruction">
+                        <i class="fas fa-images"></i>
+                        <p>დააჭირეთ ან ჩააგდეთ სურათები</p>
+                        <span class="upload-hint">შეარჩიეთ რამდენიმე სურათი ერთდროულად (მაქს. 15 სურათი)</span>
+                    </div>
+                </div>
+
+                <!-- Upload progress container -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Clear button -->
+                <button id="clearGalleryBtn" class="secondary-btn" style="display: none;">
+                    <i class="fas fa-trash"></i> გასუფთავება
+                </button>
+                
+                <!-- Theme Selection -->
+                <div class="layout-options">
+                    <h3>გალერეის თემა</h3>
+                    <div class="theme-selector">
+                        <button class="theme-btn active" data-theme="light">
+                            <i class="fas fa-sun"></i> ნათელი
+                        </button>
+                        <button class="theme-btn" data-theme="dark">
+                            <i class="fas fa-moon"></i> მუქი
+                        </button>
+                        <button class="theme-btn" data-theme="elegant">
+                            <i class="fas fa-crown"></i> ელეგანტური
+                        </button>
+                        <button class="theme-btn" data-theme="vintage">
+                            <i class="fas fa-camera-retro"></i> ვინტაჟი
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Layout options with enhanced selections -->
+                <div class="layout-options">
+                    <h3>გალერეის სტილი</h3>
+                    <div class="layout-selector">
+                        <button class="layout-btn active" data-layout="grid">
+                            <i class="fas fa-th"></i> ბადისებრი
+                        </button>
+                        <button class="layout-btn" data-layout="masonry">
+                            <i class="fas fa-columns"></i> მოზაიკური
+                        </button>
+                        <button class="layout-btn" data-layout="polaroid">
+                            <i class="fas fa-images"></i> პოლაროიდი
+                        </button>
+                        <button class="layout-btn" data-layout="classic">
+                            <i class="fas fa-border-all"></i> კლასიკური
+                        </button>
+                        <button class="layout-btn" data-layout="metro">
+                            <i class="fas fa-th-large"></i> მეტრო
+                        </button>
+                        <button class="layout-btn" data-layout="slider">
+                            <i class="fas fa-sliders-h"></i> სლაიდერი
+                        </button>
+                        <button class="layout-btn" data-layout="cinema">
+                            <i class="fas fa-film"></i> სინემა
+                        </button>
+                        <button class="layout-btn" data-layout="collage">
+                            <i class="fas fa-object-group"></i> კოლაჟი
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Advanced Quality Settings -->
+                <div class="layout-options quality-settings">
+                    <h3>ხარისხის პარამეტრები <span class="uhd-badge">Ultra HD</span></h3>
+                    <div class="settings-group">
+                        <div class="form-group">
+                            <label for="quality">გამოსახულების ხარისხი</label>
+                            <div class="range-with-value">
+                                <input type="range" id="quality" min="1" max="5" value="4" class="quality-slider">
+                                <span class="range-value" id="qualityValue">მაღალი</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="brightness">სიკაშკაშე</label>
+                            <div class="range-with-value">
+                                <input type="range" id="brightness" min="50" max="150" value="100" class="image-adjust">
+                                <span class="range-value" id="brightnessValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="form-group">
+                            <label for="contrast">კონტრასტი</label>
+                            <div class="range-with-value">
+                                <input type="range" id="contrast" min="50" max="150" value="100" class="image-adjust">
+                                <span class="range-value" id="contrastValue">100%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="saturation">სატურაცია</label>
+                            <div class="range-with-value">
+                                <input type="range" id="saturation" min="0" max="200" value="100" class="image-adjust">
+                                <span class="range-value" id="saturationValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="autoEnhance" checked>
+                            <span class="checkmark"></span>
+                            ავტო გაუმჯობესება
+                        </label>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="sharpenImages">
+                            <span class="checkmark"></span>
+                            დეტალების გამკვეთრება
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Custom gallery settings with enhanced options -->
+                <div class="gallery-settings">
+                    <h3>გალერეის პარამეტრები</h3>
+                    <div class="settings-group">
+                        <div class="form-group">
+                            <label for="frameColor">ჩარჩოს ფერი</label>
+                            <input type="color" id="frameColor" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label for="bgColor">ფონის ფერი</label>
+                            <input type="color" id="bgColor" value="#f8f9fa">
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="form-group">
+                            <label for="spacing">დაშორება</label>
+                            <div class="range-with-value">
+                                <input type="range" id="spacing" min="5" max="40" value="15">
+                                <span class="range-value" id="spacingValue">15px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="borderWidth">ჩარჩოს სისქე</label>
+                            <div class="range-with-value">
+                                <input type="range" id="borderWidth" min="0" max="30" value="10">
+                                <span class="range-value" id="borderWidthValue">10px</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="form-group">
+                            <label for="cornerRadius">კუთხის რადიუსი</label>
+                            <div class="range-with-value">
+                                <input type="range" id="cornerRadius" min="0" max="30" value="0">
+                                <span class="range-value" id="cornerRadiusValue">0px</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shadowSize">ჩრდილის ზომა</label>
+                            <div class="range-with-value">
+                                <input type="range" id="shadowSize" min="0" max="40" value="10">
+                                <span class="range-value" id="shadowSizeValue">10px</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-group special-effects">
+                        <button class="effect-btn" data-effect="none">ეფექტის გარეშე</button>
+                        <button class="effect-btn" data-effect="sepia">სეპია</button>
+                        <button class="effect-btn" data-effect="grayscale">შავ-თეთრი</button>
+                        <button class="effect-btn" data-effect="duotone">დუოტონი</button>
+                        <button class="effect-btn" data-effect="blur">ფოკუსის გარეშე</button>
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="addWatermark">
+                            <span class="checkmark"></span>
+                            ვოტერმარკის დამატება
+                        </label>
+                        <div class="watermark-settings" style="display: none;">
+                            <input type="text" id="watermarkText" placeholder="ვოტერმარკის ტექსტი">
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="applySettingsBtn" class="primary-btn">
+                    <i class="fas fa-magic"></i> პარამეტრების გადატარება
+                </button>
+            </div>
+
+            <div class="gallery-section">
+                <div class="preview-header">
+                    <h2><i class="fas fa-eye"></i> გალერეის პრევიუ</h2>
+                    <div class="preview-controls" id="previewControls">
+                        <button id="zoomInBtn" title="გადიდება"><i class="fas fa-search-plus"></i></button>
+                        <button id="zoomOutBtn" title="დაპატარება"><i class="fas fa-search-minus"></i></button>
+                        <button id="resetViewBtn" title="საწყის მდგომარეობაზე დაბრუნება"><i class="fas fa-sync-alt"></i></button>
+                        <button id="fullscreenBtn" title="სრული ეკრანი"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Gallery container with enhanced preview -->
+                <div class="gallery-preview-wrapper" id="galleryPreviewWrapper">
+                    <div id="galleryContainer" class="gallery-container grid">
+                        <div class="empty-gallery">
+                            <i class="fas fa-images"></i>
+                            <p>ატვირთეთ სურათები გალერეის შესაქმნელად</p>
+                            <span class="demo-tip">არჩეული სტილი: <strong>ბადისებრი</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gallery Statistics -->
+                <div class="gallery-stats" style="display: none;" id="galleryStats">
+                    <div class="stat-item">
+                        <i class="fas fa-image"></i>
+                        <span id="imageCount">0</span>
+                        <label>სურათები</label>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span id="totalPixels">0 MP</span>
+                        <label>რეზოლუცია</label>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-file"></i>
+                        <span id="totalSize">0 MB</span>
+                        <label>ზომა</label>
+                    </div>
+                </div>
+                
+                <!-- Save/Export buttons with enhanced options -->
+                <div class="gallery-actions" style="display: none;">
+                    <button id="downloadGalleryBtn" class="primary-btn">
+                        <i class="fas fa-download"></i> UltraHD ფორმატში გადმოწერა
+                    </button>
+                    <button id="shareGalleryBtn" class="secondary-btn">
+                        <i class="fas fa-share-alt"></i> გაზიარება
+                    </button>
+                    <div class="download-options">
+                        <select id="downloadFormat">
+                            <option value="png">PNG - მაღალი ხარისხი</option>
+                            <option value="jpg">JPG - შემცირებული ზომა</option>
+                            <option value="webp">WebP - ოპტიმიზირებული</option>
+                            <option value="pdf">PDF - დოკუმენტი</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Processing indicator -->
+                <div id="processingOverlay" class="processing-overlay" style="display:none">
+                    <div class="processing-content">
+                        <div class="spinner-large"></div>
+                        <p>მიმდინარეობს დამუშავება...</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="downloadProgressBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Share modal with enhanced functionality -->
+        <div class="modal" id="shareModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>გააზიარეთ თქვენი გალერეა</h3>
+                <div class="modal-tabs">
+                    <button class="tab-btn active" data-tab="social">სოციალური</button>
+                    <button class="tab-btn" data-tab="embed">ჩასმა</button>
+                    <button class="tab-btn" data-tab="qr">QR კოდი</button>
+                </div>
+                <div class="tab-content active" id="social-tab">
+                    <div class="share-options">
+                        <button class="share-btn facebook">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button class="share-btn twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="share-btn pinterest">
+                            <i class="fab fa-pinterest-p"></i> Pinterest
+                        </button>
+                        <button class="share-btn email">
+                            <i class="fas fa-envelope"></i> Email
+                        </button>
+                    </div>
+                    <div class="copy-link">
+                        <input type="text" id="galleryLink" readonly value="https://gallery.example.com/shared/12345">
+                        <button id="copyLinkBtn"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+                <div class="tab-content" id="embed-tab">
+                    <p>ჩასვით ეს კოდი თქვენს ვებ გვერდზე:</p>
+                    <div class="copy-link">
+                        <textarea id="embedCode" readonly><iframe src="https://gallery.example.com/embed/12345" width="800" height="600" frameborder="0"></iframe></textarea>
+                        <button id="copyEmbedBtn"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+                <div class="tab-content" id="qr-tab">
+                    <div class="qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://gallery.example.com/shared/12345" alt="QR Code" id="qrCode">
+                        <button id="downloadQRBtn" class="secondary-btn"><i class="fas fa-download"></i> QR კოდის გადმოწერა</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>შექმნილია <i class="fas fa-heart"></i> Produqtis Imager-ის მიერ &copy; 2023</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="gallery-script.js"></script>
+</body>
+</html>

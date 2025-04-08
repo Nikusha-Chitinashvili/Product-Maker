@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>პროდუქტის შაბლონის გენერატორი</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="https://api.iconify.design/fluent-emoji-flat:package.svg" alt="ლოგო">
+                <h1>პროდუქტის შაბლონის გენერატორი</h1>
+            </div>
+            <p>შექმენით ლამაზი პროდუქტის შაბლონები - უბრალოდ შეავსეთ დეტალები, აირჩიეთ თემა და ჩამოტვირთეთ ულტრა HD ხარისხით!</p>
+            
+            <nav class="main-nav">
+                <a href="gallery.html" class="nav-btn"><i class="fas fa-images"></i> სურათების გალერეა</a>
+            </nav>
+        </div>
+
+        <div class="app">
+            <div class="input-section">
+                <h2><i class="fas fa-sliders-h"></i> შეიყვანეთ პროდუქტის დეტალები</h2>
+                <form id="productForm" novalidate>
+                    <!-- Product Name -->
+                    <div class="form-group">
+                        <label for="productName">პროდუქტის სახელი</label>
+                        <input type="text" id="productName" placeholder="შეიყვანეთ პროდუქტის სახელი" required>
+                        <div id="nameError" class="error-message">გთხოვთ შეიყვანოთ პროდუქტის სახელი</div>
+                    </div>
+
+                    <!-- Product Price -->
+                    <div class="form-group">
+                        <label for="productPrice">
+                            ფასი 
+                            <div class="price-tooltip">
+                                <span class="tooltip-text">შეიყვანეთ ფასი ფასდაკლებამდე</span>
+                            </div>
+                        </label>
+                        <div class="currency-group">
+                            <input type="number" id="productPrice" placeholder="შეიყვანეთ ფასი" min="0" step="0.01" required>
+                            <select id="currency" class="currency-icons">
+                                <option value="₾">₾</option>
+                                <option value="$">$</option>
+                                <option value="€">€</option>
+                                <option value="£">£</option>
+                                <option value="¥">¥</option>
+                                <option value="₽">₽</option>
+                            </select>
+                        </div>
+                        <div id="priceError" class="error-message">გთხოვთ შეიყვანოთ სწორი ფასი</div>
+                    </div>
+
+                    <!-- Product Image -->
+                    <div class="form-group">
+                        <label for="productImage">პროდუქტის სურათი</label>
+                        <div class="file-input-container" id="dropZone">
+                            <input type="file" id="productImage" accept="image/*" required>
+                            <div class="file-input-button">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>დააჭირეთ სურათის ასატვირთად ან ჩააგდეთ აქ</p>
+                                <span class="format-hint">მხარდაჭერილი ფორმატები: JPG, PNG, WEBP (მაქს: 5MB)</span>
+                            </div>
+                        </div>
+                        <div id="imageError" class="error-message">გთხოვთ აირჩიოთ პროდუქტის სურათი</div>
+                        
+                        <div class="image-preview-container">
+                            <img id="imagePreview" class="image-preview" src="" alt="სურათის წინასწარი გადახედვა">
+                            <div class="image-controls" id="imageControls">
+                                <button type="button" id="removeImageBtn"><i class="fas fa-trash"></i> წაშლა</button>
+                                <button type="button" id="changeImageBtn"><i class="fas fa-exchange-alt"></i> შეცვლა</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discount Options -->
+                    <div class="form-group">
+                        <label for="discountType">ფასდაკლება (არასავალდებულო)</label>
+                        <div class="discount-container">
+                            <select id="discountType">
+                                <option value="none">ფასდაკლების გარეშე</option>
+                                <option value="percentage">პროცენტული</option>
+                                <option value="amount">ფიქსირებული თანხა</option>
+                                <option value="both">ორივე</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Percentage Discount -->
+                    <div class="form-group discount-fields" id="percentageField" style="display: none;">
+                        <label for="discountPercentage">ფასდაკლების პროცენტი</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="discountPercentage" placeholder="შეიყვანეთ ფასდაკლების პროცენტი" min="0" max="100">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <div id="percentageError" class="error-message">გთხოვთ შეიყვანოთ სწორი პროცენტი (0-100)</div>
+                    </div>
+
+                    <!-- Amount Discount -->
+                    <div class="form-group discount-fields" id="amountField" style="display: none;">
+                        <label for="discountAmount">ფასდაკლების თანხა</label>
+                        <input type="number" id="discountAmount" placeholder="შეიყვანეთ ფასდაკლების თანხა" min="0" step="0.01">
+                        <div id="amountError" class="error-message">ფასდაკლება არ უნდა აღემატებოდეს პროდუქტის ფასს</div>
+                    </div>
+
+                    <!-- Theme Selection -->
+                    <div class="form-group theme-selector">
+                        <label for="templateTheme">აირჩიეთ დიზაინი</label>
+                        <div class="theme-options">
+                            <select id="templateTheme">
+                                <option value="modern">თანამედროვე დიზაინი</option>
+                                <option value="elegant">კლასიკური ელეგანტური</option>
+                                <option value="minimalist">მინიმალისტური სტილი</option>
+                                <option value="vibrant">ფერადი და მხიარული</option>
+                                <option value="luxury">პრემიუმ კლასი</option>
+                                <option value="georgian">საქართველოს დროშა</option>
+                                <option value="tbilisi">თბილისური მოტივები</option>
+                                <option value="vintage">ვინტაჟური სტილი</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options Accordion -->
+                    <div class="accordion">
+                        <div class="accordion-header">
+                            <span>დამატებითი პარამეტრები</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="form-group">
+                                <label for="badgeText">საბეჭდის ტექსტი (არასავალდებულო)</label>
+                                <input type="text" id="badgeText" placeholder="მაგ., ახალი! ან ლიმიტირებული გამოცემა">
+                            </div>
+                            <div class="form-group">
+                                <label for="bgColor">ფონის ფერი</label>
+                                <input type="color" id="bgColor" value="#ffffff">
+                            </div>
+                            <div class="form-group save-location">
+                                <label for="saveLocation">შენახვის ლოკაცია</label>
+                                <div class="location-select">
+                                    <input type="text" id="saveLocation" placeholder="აირჩიეთ საქაღალდე შენახვისთვის" readonly>
+                                    <button type="button" id="browseFolderBtn"><i class="fas fa-folder-open"></i> არჩევა</button>
+                                </div>
+                                <div class="save-preference">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="rememberFolder">
+                                        <span class="checkmark"></span>
+                                        დაიმახსოვრე ეს ლოკაცია
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button type="submit" id="generateBtn">
+                        <span id="generateSpinner" class="spinner"></span>
+                        <i class="fas fa-magic"></i> შექმენი შაბლონი
+                    </button>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-header">
+                    <h2><i class="fas fa-eye"></i> წინასწარი ხედვა</h2>
+                    <div class="preview-controls" id="previewControls">
+                        <button id="rotateLeftBtn" title="შემობრუნება მარცხნივ"><i class="fas fa-undo"></i></button>
+                        <button id="rotateRightBtn" title="შემობრუნება მარჯვნივ"><i class="fas fa-redo"></i></button>
+                        <button id="zoomInBtn" title="გადიდება"><i class="fas fa-search-plus"></i></button>
+                        <button id="zoomOutBtn" title="დაპატარავება"><i class="fas fa-search-minus"></i></button>
+                        <button id="resetViewBtn" title="საწყის მდგომარეობაზე დაბრუნება"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+                <div class="template-container" id="templateContainer">
+                    <div class="empty-template-message">
+                        <i class="fas fa-image"></i>
+                        <p>თქვენი პროდუქტის შაბლონი გამოჩნდება აქ</p>
+                    </div>
+                </div>
+                <button id="downloadBtn" class="download-btn" style="display: none;">
+                    <span id="downloadSpinner" class="spinner"></span>
+                    <i class="fas fa-download"></i> ჩამოტვირთე ულტრა HD ხარისხში
+                </button>
+                <div id="downloadSuccess" class="success-message"><i class="fas fa-check-circle"></i> შაბლონი წარმატებით ჩამოიტვირთა ულტრა HD ხარისხით!</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>შექმნილია <i class="fas fa-heart"></i> Produqtis Imager-ის მიერ &copy; 2023</p>
+        </footer>
+    </div>
+
+    <!-- Updated to latest stable version of html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="file-system.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
